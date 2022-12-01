@@ -1,11 +1,15 @@
 mod assignment_1_1;
+mod assignment_1_2;
 
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
 
 pub fn get_assignments() -> Vec<Assignment> {
-    return vec![assignment_1_1::get_assignment()];
+    return vec![
+        assignment_1_1::get_assignment(),
+        assignment_1_2::get_assignment(),
+    ];
 }
 
 pub struct Assignment {
@@ -35,13 +39,9 @@ impl Assignment {
         };
     }
 
-    pub fn get_id(&self) -> String {
-        return format!("{}_{}", self.day, self.part);
-    }
-
     pub fn run(&self) -> Result<Option<i32>, String> {
         // Reads the file <id>.txt and returns the contents as a vector of strings.
-        let path = format!("src/assignments/assignment_{}.txt", self.get_id());
+        let path = format!("src/assignments/assignment_{}.txt", self.day);
         let data = _read_lines(&path)
             .and_then(|lines| lines.collect::<Result<Vec<String>, io::Error>>())
             .map_err(|e| format!("Could not read file at {}\nError: {}", &path, e))?;
