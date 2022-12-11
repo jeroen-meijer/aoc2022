@@ -113,7 +113,7 @@ fn _run(_data: Vec<String>) -> Option<i32> {
 }
 
 #[cfg(test)]
-mod move_test {
+mod tests {
     use test_case::case;
 
     use super::*;
