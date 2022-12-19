@@ -1,10 +1,16 @@
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
-    return Assignment::new(1, 1, "Calorie Counting".to_string(), Some(74198), _run);
+    return Assignment::new(
+        1,
+        1,
+        "Calorie Counting".to_string(),
+        Answer::Integer(74198),
+        _run,
+    );
 }
 
-fn _run(data: Vec<String>) -> Option<i32> {
+fn _run(data: Vec<String>) -> Answer {
     data.split(|line| line.is_empty())
         .map(|group| {
             group
@@ -13,4 +19,5 @@ fn _run(data: Vec<String>) -> Option<i32> {
                 .sum::<i32>()
         })
         .max()
+        .into()
 }

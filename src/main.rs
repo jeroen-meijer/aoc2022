@@ -5,7 +5,7 @@ mod helpers;
 
 use stopwatch::Stopwatch;
 
-use assignments::get_assignments;
+use assignments::{get_assignments, Answer};
 
 fn throw_invalid_assignment_number_error() -> ! {
     println!("Invalid &assignment number.");
@@ -50,30 +50,30 @@ fn _run_single_assignment(n: i32) {
     );
 
     let did_succeed = match assignment.run() {
-        Ok(None) => {
-            println!("No answer given.");
-            false
-        }
         Err(e) => {
             println!("Error while running assignment: {}", e);
             false
         }
-        Ok(Some(answer)) => {
-            println!("Answer given: {}", answer);
+        Ok(Answer::None) => {
+            println!("No answer given.");
+            false
+        }
+        Ok(answer) => {
+            println!("Answer given: {}", answer.to_string());
             match assignment.answer {
-                None => {
+                Answer::None => {
                     println!("No real answer to compare to.");
                     false
                 }
-                Some(real_answer) => {
-                    println!("Real answer: {}", real_answer);
-                    answer == real_answer
+                _ => {
+                    println!("Real answer: {}", assignment.answer.to_string());
+                    answer == assignment.answer
                 }
             }
         }
     };
 
-    let has_real_answer = assignment.answer != None;
+    let has_real_answer = assignment.answer != Answer::None;
 
     if did_succeed {
         println!("✅ Correct!");
@@ -98,7 +98,7 @@ fn _run_all_assignments() {
         let runtime = format!("{}ms", sw.elapsed_ms());
 
         match run_result {
-            Ok(None) => {
+            Ok(Answer::None) => {
                 result_icon = "➖".to_string();
                 result_description = "No answer.".to_string();
             }
@@ -106,21 +106,25 @@ fn _run_all_assignments() {
                 result_icon = "⚠️".to_string();
                 result_description = format!("Error: {}", e).to_string();
             }
-            Ok(Some(answer)) => {
-                let answer_string = format!("Answer given: {}", answer);
+            Ok(answer) => {
+                let full_answer_string = format!("Answer given: {}", answer.to_string());
                 match assignment.answer {
-                    None => {
+                    Answer::None => {
                         result_icon = "❓".to_string();
-                        result_description = format!("{}. No correct answer given.", answer_string);
+                        result_description =
+                            format!("{}. No correct answer given.", full_answer_string);
                     }
-                    Some(real_answer) => {
+                    real_answer => {
                         if answer == real_answer {
                             result_icon = "✅".to_string();
-                            result_description = answer_string;
+                            result_description = full_answer_string;
                         } else {
                             result_icon = "❌".to_string();
-                            result_description =
-                                format!("{}. Correct answer: {}", answer_string, real_answer);
+                            result_description = format!(
+                                "{}. Correct answer: {}",
+                                full_answer_string,
+                                real_answer.to_string()
+                            );
                         }
                     }
                 }

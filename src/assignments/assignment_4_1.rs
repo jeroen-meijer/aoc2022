@@ -1,9 +1,9 @@
 use std::str::FromStr;
 
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
-    return Assignment::new(4, 1, "Camp Cleanup".to_string(), Some(599), _run);
+    return Assignment::new(4, 1, "Camp Cleanup".to_string(), Answer::Integer(599), _run);
 }
 
 #[derive(PartialEq, Debug)]
@@ -44,7 +44,7 @@ impl FromStr for Section {
     }
 }
 
-fn _run(data: Vec<String>) -> Option<i32> {
+fn _run(data: Vec<String>) -> Answer {
     let mut num_overlap = 0;
     for line in data {
         let mut pair_strings = line.split(',');
@@ -56,7 +56,7 @@ fn _run(data: Vec<String>) -> Option<i32> {
         }
     }
 
-    Some(num_overlap)
+    Answer::Integer(num_overlap)
 }
 
 #[cfg(test)]

@@ -2,14 +2,14 @@ use std::collections::HashMap;
 
 use itertools::Itertools;
 
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
     return Assignment::new(
         3,
         2,
         "Rucksack Reorganization".to_string(),
-        Some(2633),
+        Answer::Integer(2633),
         _run,
     );
 }
@@ -24,9 +24,8 @@ fn _get_priority_from_char(c: char) -> Result<u32, ()> {
     Ok((c as u32) - offset)
 }
 
-fn _run(data: Vec<String>) -> Option<i32> {
-    let ans = data
-        .iter()
+fn _run(data: Vec<String>) -> Answer {
+    data.iter()
         .chunks(3)
         .into_iter()
         .map(|chunk| {
@@ -50,9 +49,8 @@ fn _run(data: Vec<String>) -> Option<i32> {
             panic!("This function should have already returned.")
         })
         .map(|c| _get_priority_from_char(c).unwrap())
-        .sum::<u32>();
-
-    Some(ans as i32)
+        .sum::<u32>()
+        .into()
 }
 
 #[cfg(test)]

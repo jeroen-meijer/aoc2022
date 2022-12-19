@@ -1,9 +1,9 @@
 use std::ops::RangeInclusive;
 
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
-    return Assignment::new(4, 2, "Camp Cleanup".to_string(), Some(928), _run);
+    return Assignment::new(4, 2, "Camp Cleanup".to_string(), Answer::Integer(928), _run);
 }
 
 #[derive(PartialEq, Debug)]
@@ -70,7 +70,7 @@ impl Overlap for RangeInclusive<u32> {
     }
 }
 
-fn _run(data: Vec<String>) -> Option<i32> {
+fn _run(data: Vec<String>) -> Answer {
     let section_pairs = data.iter().map(|line| {
         let mut pair_strings = line.split(',');
         let a = pair_strings.next().unwrap().to_range().unwrap();
@@ -79,7 +79,7 @@ fn _run(data: Vec<String>) -> Option<i32> {
         (a, b)
     });
 
-    Some(section_pairs.filter(|(a, b)| a.overlaps(&b)).count() as i32)
+    section_pairs.filter(|(a, b)| a.overlaps(&b)).count().into()
 }
 
 #[cfg(test)]

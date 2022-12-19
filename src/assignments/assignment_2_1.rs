@@ -1,9 +1,9 @@
 #![allow(unused)] // FIXME
 
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
-    return Assignment::new(2, 1, "Rock Paper Scissors".to_string(), None, _run);
+    return Assignment::new(2, 1, "Rock Paper Scissors".to_string(), Answer::None, _run);
 }
 
 #[derive(Eq, PartialEq, Hash, Debug)]
@@ -81,8 +81,8 @@ impl Game {
     }
 }
 
-fn _run(_data: Vec<String>) -> Option<i32> {
-    None
+fn _run(_data: Vec<String>) -> Answer {
+    Answer::None
 
     // let mut games: Vec<Game> = vec![];
 

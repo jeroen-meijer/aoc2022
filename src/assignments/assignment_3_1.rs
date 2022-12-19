@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 
-use super::Assignment;
+use super::{Answer, Assignment};
 
 pub fn get_assignment() -> Assignment {
     return Assignment::new(
         3,
         1,
         "Rucksack Reorganization".to_string(),
-        Some(7785),
+        Answer::Integer(7785),
         _run,
     );
 }
@@ -22,9 +22,8 @@ fn _get_priority_from_char(c: char) -> Result<u32, ()> {
     Ok((c as u32) - offset)
 }
 
-fn _run(data: Vec<String>) -> Option<i32> {
-    let ans = data
-        .iter()
+fn _run(data: Vec<String>) -> Answer {
+    data.iter()
         .map(|line| line.split_at(line.len() / 2))
         .map(|s| {
             (
@@ -60,9 +59,8 @@ fn _run(data: Vec<String>) -> Option<i32> {
             panic!("This function should have already returned.")
         })
         .map(|c| _get_priority_from_char(c).unwrap())
-        .sum::<u32>();
-
-    Some(ans as i32)
+        .sum::<u32>()
+        .into()
 }
 
 #[cfg(test)]
