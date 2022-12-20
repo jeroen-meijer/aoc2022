@@ -5,11 +5,27 @@ mod assignment_3_1;
 mod assignment_3_2;
 mod assignment_4_1;
 mod assignment_4_2;
+mod assignment_5_1;
+mod assignment_5_2;
 
 use core::panic;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::path::Path;
+
+pub fn get_assignments() -> Vec<Assignment> {
+    return vec![
+        assignment_1_1::get_assignment(),
+        assignment_1_2::get_assignment(),
+        assignment_2_1::get_assignment(),
+        assignment_3_1::get_assignment(),
+        assignment_3_2::get_assignment(),
+        assignment_4_1::get_assignment(),
+        assignment_4_2::get_assignment(),
+        assignment_5_1::get_assignment(),
+        assignment_5_2::get_assignment(),
+    ];
+}
 
 #[derive(PartialEq)]
 pub enum Answer {
@@ -95,19 +111,6 @@ impl From<usize> for Answer {
     fn from(value: usize) -> Self {
         Answer::Integer(value as u32)
     }
-}
-
-pub fn get_assignments() -> Vec<Assignment> {
-    return vec![
-        assignment_1_1::get_assignment(),
-        assignment_1_2::get_assignment(),
-        assignment_2_1::get_assignment(),
-        assignment_3_1::get_assignment(),
-        assignment_3_2::get_assignment(),
-        assignment_4_1::get_assignment(),
-        assignment_4_2::get_assignment(),
-        assignment_5_1::get_assignment(),
-    ];
 }
 
 pub struct Assignment {
