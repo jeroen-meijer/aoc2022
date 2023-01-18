@@ -31,12 +31,6 @@ fn _run(data: Vec<String>) -> Answer {
     let currently_available_space = TOTAL_DISK_SIZE - root_dir_size;
     let additional_required_space = REQUIRED_SPACE - currently_available_space;
 
-    dbg!(
-        root_dir_size,
-        currently_available_space,
-        additional_required_space
-    );
-
     Answer::Integer(
         dirs_with_sizes
             .map(|(_, size)| size)

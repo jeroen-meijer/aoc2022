@@ -11,6 +11,7 @@ mod assignment_6_1;
 mod assignment_6_2;
 mod assignment_7_1;
 mod assignment_7_2;
+mod assignment_8_1;
 
 use core::panic;
 use std::fs::File;
@@ -32,6 +33,7 @@ pub fn get_assignments() -> Vec<Assignment> {
         assignment_6_2::get_assignment(),
         assignment_7_1::get_assignment(),
         assignment_7_2::get_assignment(),
+        assignment_8_1::get_assignment(),
     ];
 }
 
